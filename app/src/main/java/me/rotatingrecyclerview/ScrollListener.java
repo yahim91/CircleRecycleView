@@ -71,6 +71,8 @@ public class ScrollListener extends RecyclerView.OnScrollListener {
     @Override
     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
+
+        Log.d(TAG, "State changed: " + newState);
     }
 
 

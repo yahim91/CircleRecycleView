@@ -19,26 +19,28 @@ public class SnappyLinearLayoutManager extends LinearLayoutManager implements IS
     // Find the Scroller fling implementation in android.widget.Scroller.fling().
     private static final float INFLEXION = 0.35f; // Tension lines cross at (INFLEXION, 1)
     private static float DECELERATION_RATE = (float) (Math.log(0.78) / Math.log(0.9));
-    private static double FRICTION = 0.84;
+    private float mFlingFriction = ViewConfiguration.getScrollFriction();
 
     private double deceleration;
+    private float mPhysicalCoeff;
 
     public SnappyLinearLayoutManager(Context context) {
         super(context);
-        calculateDeceleration(context);
+
+        mPhysicalCoeff = computeDeceleration(context, 0.84F);
     }
 
     public SnappyLinearLayoutManager(Context context, int orientation, boolean reverseLayout) {
         super(context, orientation, reverseLayout);
-        calculateDeceleration(context);
+        mPhysicalCoeff = computeDeceleration(context, 0.84F);
     }
 
-    private void calculateDeceleration(Context context) {
-        deceleration = SensorManager.GRAVITY_EARTH // g (m/s^2)
-                * 39.3700787 // inches per meter
+    private float computeDeceleration(Context context, float friction) {
+        return SensorManager.GRAVITY_EARTH // g (m/s^2)
+                * 39.37F // inches per meter
                 // pixels per inch. 160 is the "default" dpi, i.e. one dip is one pixel on a 160 dpi
                 // screen
-                * context.getResources().getDisplayMetrics().density * 160.0f * FRICTION;
+                * context.getResources().getDisplayMetrics().density * 160.0f * friction;
     }
 
     @Override
@@ -97,14 +99,14 @@ public class SnappyLinearLayoutManager extends LinearLayoutManager implements IS
 
     private double getSplineFlingDistance(double velocity) {
         final double l = getSplineDeceleration(velocity);
-        final double decelMinusOne = DECELERATION_RATE;
-        return ViewConfiguration.getScrollFriction() * deceleration
+        final double decelMinusOne = DECELERATION_RATE - 1.0;
+        return mFlingFriction * mPhysicalCoeff
                 * Math.exp(DECELERATION_RATE / decelMinusOne * l);
     }
 
     private double getSplineDeceleration(double velocity) {
         return Math.log(INFLEXION * Math.abs(velocity)
-                / (ViewConfiguration.getScrollFriction() * deceleration));
+                / (mFlingFriction * mPhysicalCoeff));
     }
 
     /**
