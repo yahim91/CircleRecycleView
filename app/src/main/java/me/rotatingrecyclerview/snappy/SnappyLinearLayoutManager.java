@@ -22,7 +22,6 @@ public class SnappyLinearLayoutManager extends LinearLayoutManager implements IS
     private static float DECELERATION_RATE = (float) (Math.log(0.78) / Math.log(0.9));
     private float mFlingFriction = ViewConfiguration.getScrollFriction();
 
-    private double deceleration;
     private float mPhysicalCoeff;
 
     public SnappyLinearLayoutManager(Context context) {
@@ -64,7 +63,7 @@ public class SnappyLinearLayoutManager extends LinearLayoutManager implements IS
 
         Log.d("Distance", String.format("Dist %f Velocity sign: %s", dist, velocity > 0 ? "left" : "right"));
 
-        Log.d("Child Size", String.format("%d", childSize));
+        Log.d("Snappy", String.format("scroll pos %d curr pos %d", scrollPos, currPos));
 
 
         final double tempScroll = scrollPos + (velocity > 0 ? dist : -dist);
@@ -132,6 +131,7 @@ public class SnappyLinearLayoutManager extends LinearLayoutManager implements IS
 
         if (getOrientation() == HORIZONTAL
                 && Math.abs(child.getLeft()) > child.getMeasuredWidth() / 2) {
+            Log.d("onTouch", String.format("no fling left: %d", child.getLeft()));
             // Scrolled first view more than halfway offscreen
             return childPos + 1;
         } else if (getOrientation() == VERTICAL

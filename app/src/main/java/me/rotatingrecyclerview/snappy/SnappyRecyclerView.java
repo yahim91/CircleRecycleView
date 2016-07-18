@@ -3,6 +3,7 @@ package me.rotatingrecyclerview.snappy;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 
 /**
@@ -57,7 +58,7 @@ public final class SnappyRecyclerView extends RecyclerView {
             // Finally, the scroll state is idle--meaning that the resultant
             // velocity after the user's gesture was below the threshold, and
             // no fling was performed, so the view may be in an unaligned state
-            // and will not be flung to a proper state.
+            // and will not be flung to a proper state
             smoothScrollToPosition(((ISnappyLayoutManager) lm).getFixScrollPos());
         }
 

@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import me.rotatingrecyclerview.animators.MySimpleItemAnimator;
@@ -24,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private RecyclerView recyclerView;
     private Adapter adapter;
-    private String[] elems = new String[] {"text1", "text2", "text3", "text4", "text5", "text6", "text7"};
 //    private LinearLayoutManager linearLayoutManager;
     private SnappyLinearLayoutManager snappyLinearLayoutManager;
     private ScrollListener scrollListener;
@@ -34,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        List<String> elems = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            elems.add("Text" + i);
+        }
         adapter = new Adapter(this, elems);
         snappyLinearLayoutManager = new SnappyLinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
@@ -71,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-        private String[] mDataset;
+        private List<String> mDataset;
 
         // Provide a reference to the views for each data item
         // Complex data items may need more than one view per item, and
@@ -92,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Provide a suitable constructor (depends on the kind of dataset)
-        public Adapter(Context context, String[] myDataset) {
-            mDataset = myDataset;
+        public Adapter(Context context, List<String> mDataSet) {
+            mDataset = mDataSet;
         }
 
         // Create new views (invoked by the layout manager)
@@ -112,14 +117,14 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(ViewHolder holder, int position) {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
-            holder.mTextView.setText(mDataset[position]);
+            holder.mTextView.setText(mDataset.get(position));
 
         }
 
         // Return the size of your dataset (invoked by the layout manager)
         @Override
         public int getItemCount() {
-            return mDataset.length;
+            return mDataset.size();
         }
     }
 

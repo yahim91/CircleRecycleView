@@ -28,6 +28,7 @@ public class ScrollListener extends RecyclerView.OnScrollListener {
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
         int itemSize = recyclerView.getWidth()/3;
+        int centerX = recyclerView.getWidth()/2;
         Log.d(TAG, "width: " + recyclerView.getWidth());
         int begin = itemSize;
 
@@ -35,10 +36,11 @@ public class ScrollListener extends RecyclerView.OnScrollListener {
 
         for (int i = 0; i < recyclerView.getChildCount(); i++) {
             View view = recyclerView.getChildAt(i);
-            Log.d(TAG, "X: " + i + " " +  view.getX());
+            float childCenterX = view.getX() + view.getWidth()/2;
+            Log.d(TAG, String.format("%d centerX: %d childCenterX %f", i,  centerX, childCenterX));
             MainActivity.Adapter.ViewHolder holder = (MainActivity.Adapter.ViewHolder) recyclerView.getChildViewHolder(view);
             ViewGroup.LayoutParams params = view.getLayoutParams();
-            float percent = 1F - (Math.abs(view.getX() - begin))/itemSize;
+            float percent = 1F - Math.abs(childCenterX - centerX)/itemSize;
             if (percent < 0F) {
                 percent = 0F;
             } else if (percent > 1F) {
