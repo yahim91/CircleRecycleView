@@ -78,6 +78,8 @@ public class SnappyLinearLayoutManager extends LinearLayoutManager implements IS
                 return (int) (currPos + (dist / childSize));
             }
         }*/
+
+        Log.d("Snappy", String.format("%d %d", currPos, velocity));
         if (velocity < 0) {
             return Math.max(currPos, 0);
         } else {
