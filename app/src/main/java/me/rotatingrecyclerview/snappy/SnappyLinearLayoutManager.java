@@ -97,7 +97,7 @@ public class SnappyLinearLayoutManager extends LinearLayoutManager implements IS
 
     private double getSplineFlingDistance(double velocity) {
         final double l = getSplineDeceleration(velocity);
-        final double decelMinusOne = DECELERATION_RATE - 1.0;
+        final double decelMinusOne = DECELERATION_RATE;
         return ViewConfiguration.getScrollFriction() * deceleration
                 * Math.exp(DECELERATION_RATE / decelMinusOne * l);
     }

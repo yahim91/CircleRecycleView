@@ -32,7 +32,7 @@ public class ScrollListener extends RecyclerView.OnScrollListener {
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
 
-        int begin = 263;
+        /*int begin = 263;
         int end = 263 * 2;
         int width = 360;
 
@@ -70,7 +70,7 @@ public class ScrollListener extends RecyclerView.OnScrollListener {
 
             Log.d(TAG, String.format("offset %d", holder.offset));
         }
-        recyclerView.invalidateItemDecorations();
+        recyclerView.invalidateItemDecorations();*/
 
     }
 

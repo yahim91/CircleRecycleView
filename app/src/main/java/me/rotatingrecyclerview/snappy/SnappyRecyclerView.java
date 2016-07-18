@@ -26,8 +26,8 @@ public final class SnappyRecyclerView extends RecyclerView {
     public boolean fling(int velocityX, int velocityY) {
         final LayoutManager lm = getLayoutManager();
 
-        int newVelocityX = (int)(velocityX * 0.15F);
-        int newVelocityY = (int)(velocityY * 0.15F);
+        int newVelocityX = (int)(velocityX * 0.2F);
+        int newVelocityY = (int)(velocityY * 0.2F);
 
 
         if (lm instanceof ISnappyLayoutManager) {
