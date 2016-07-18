@@ -34,6 +34,7 @@ public class ScrollListener extends RecyclerView.OnScrollListener {
 
         int begin = 263;
         int end = 263 * 2;
+        int width = 360;
 
         int dif = 263;
         int max = 0;
@@ -53,9 +54,9 @@ public class ScrollListener extends RecyclerView.OnScrollListener {
 
             float ratio = 1F + (percent * 0.5F);
             params.height = (int)(525F * ratio);
-            params.width = (int)(263F * ratio);
+            params.width = (int)(width * ratio);
             holder.oldOffset = holder.offset;
-            holder.offset = (params.width - 263)/2;
+            holder.offset = (params.width - width)/2;
             view.requestLayout();
 
             if (holder.offset > max) {

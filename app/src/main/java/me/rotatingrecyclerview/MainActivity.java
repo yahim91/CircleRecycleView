@@ -15,25 +15,31 @@ import android.widget.TextView;
 import java.util.Random;
 
 import me.rotatingrecyclerview.animators.MySimpleItemAnimator;
+import me.rotatingrecyclerview.snappy.SnappyLinearLayoutManager;
+import me.rotatingrecyclerview.snappy.SnappyRecyclerView;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private RecyclerView recyclerView;
+    private SnappyRecyclerView recyclerView;
     private Adapter adapter;
     private String[] elems = new String[] {"text1", "text2", "text3", "text4", "text5", "text6", "text7"};
     private LinearLayoutManager linearLayoutManager;
+    private SnappyLinearLayoutManager snappyLinearLayoutManager;
     private ScrollListener scrollListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (SnappyRecyclerView) findViewById(R.id.recycler_view);
         adapter = new Adapter(elems);
-        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        snappyLinearLayoutManager = new SnappyLinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
+//        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
+        recyclerView.setLayoutManager(snappyLinearLayoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.setChildDrawingOrderCallback(new RecyclerView.ChildDrawingOrderCallback() {
             @Override
@@ -48,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
 //                super.getItemOffsets(outRect, view, parent, state);
                 Adapter.ViewHolder holder = (Adapter.ViewHolder) parent.getChildViewHolder(view);
-                outRect.set(-holder.offset, 0, -holder.offset, 0);
+//                outRect.set(-holder.offset, 0, -holder.offset, 0);
                 Log.d(TAG, "Item offsets " + holder.offset);
             }
         });
