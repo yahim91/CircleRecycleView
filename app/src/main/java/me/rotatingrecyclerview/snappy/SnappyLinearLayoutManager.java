@@ -61,18 +61,27 @@ public class SnappyLinearLayoutManager extends LinearLayoutManager implements IS
     private int calcPosForVelocity(int velocity, int scrollPos, int childSize, int currPos) {
         final double dist = getSplineFlingDistance(velocity);
 
-        Log.d("Distance", String.format("Dist %f Velocity sign: %s", dist, velocity > 0 ? "left" : "right"));
-
-        Log.d("Snappy", String.format("scroll pos %d curr pos %d", scrollPos, currPos));
-
-
         final double tempScroll = scrollPos + (velocity > 0 ? dist : -dist);
 
-        if (velocity < 0) {
+        /*if (velocity < 0) {
             // Not sure if I need to lower bound this here.
-            return (int) Math.max(currPos + tempScroll / childSize, 0);
+            if (Math.abs(dist) < childSize && Math.abs(dist) > childSize/2) {
+                Log.d("next", "" + Math.max(currPos - 1, 0));
+                return Math.max(currPos - 1, 0);
+            } else {
+                return (int) Math.max(currPos - dist/ childSize + 1, 0);
+            }
         } else {
-            return (int) (currPos + (tempScroll / childSize) + 1);
+            if (Math.abs(dist) < childSize && Math.abs(dist) > childSize/2) {
+                return currPos + 1;
+            } else {
+                return (int) (currPos + (dist / childSize));
+            }
+        }*/
+        if (velocity < 0) {
+            return Math.max(currPos, 0);
+        } else {
+            return currPos + 1;
         }
     }
 

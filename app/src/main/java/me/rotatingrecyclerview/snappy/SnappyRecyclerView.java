@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 /**
  * Created by mihai on 7/18/2016.
  */
-public final class SnappyRecyclerView extends RecyclerView {
+public class SnappyRecyclerView extends RecyclerView {
 
     public SnappyRecyclerView(Context context) {
         super(context);
@@ -27,7 +27,7 @@ public final class SnappyRecyclerView extends RecyclerView {
     public boolean fling(int velocityX, int velocityY) {
         final LayoutManager lm = getLayoutManager();
 
-        int newVelocityX = velocityX;//(int)(velocityX * 0.2F);
+        int newVelocityX = (int)(velocityX * 0.3F);//(int)(velocityX * 0.4F);
         int newVelocityY = velocityY;//(int)(velocityY * 0.2F);
 
         boolean flinging = super.fling(newVelocityX, newVelocityY);
