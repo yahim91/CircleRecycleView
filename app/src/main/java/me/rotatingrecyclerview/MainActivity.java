@@ -17,7 +17,6 @@ import java.util.Random;
 
 import me.rotatingrecyclerview.animators.MySimpleItemAnimator;
 import me.rotatingrecyclerview.snappy.SnappyLinearLayoutManager;
-import me.rotatingrecyclerview.snappy.SnappyRecyclerView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Adapter adapter;
     private String[] elems = new String[] {"text1", "text2", "text3", "text4", "text5", "text6", "text7"};
-    private LinearLayoutManager linearLayoutManager;
+//    private LinearLayoutManager linearLayoutManager;
     private SnappyLinearLayoutManager snappyLinearLayoutManager;
     private ScrollListener scrollListener;
 
@@ -38,10 +37,11 @@ public class MainActivity extends AppCompatActivity {
         adapter = new Adapter(this, elems);
         snappyLinearLayoutManager = new SnappyLinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//        recyclerView.setLayoutManager(linearLayoutManager);
 
-//        recyclerView.setLayoutManager(snappyLinearLayoutManager);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(snappyLinearLayoutManager);
+
         recyclerView.setAdapter(adapter);
         recyclerView.setChildDrawingOrderCallback(new RecyclerView.ChildDrawingOrderCallback() {
             @Override

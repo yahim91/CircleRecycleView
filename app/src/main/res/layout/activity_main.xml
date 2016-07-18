@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="me.rotatingrecyclerview.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
+    <me.rotatingrecyclerview.snappy.SnappyRecyclerView
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:id="@+id/recycler_view" />

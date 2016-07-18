@@ -26,16 +26,16 @@ public final class SnappyRecyclerView extends RecyclerView {
     public boolean fling(int velocityX, int velocityY) {
         final LayoutManager lm = getLayoutManager();
 
-        int newVelocityX = (int)(velocityX * 0.2F);
-        int newVelocityY = (int)(velocityY * 0.2F);
+        int newVelocityX = velocityX;//(int)(velocityX * 0.2F);
+        int newVelocityY = velocityY;//(int)(velocityY * 0.2F);
 
+        boolean flinging = super.fling(newVelocityX, newVelocityY);
 
-        if (lm instanceof ISnappyLayoutManager) {
+        if (flinging && lm instanceof ISnappyLayoutManager) {
             super.smoothScrollToPosition(((ISnappyLayoutManager) getLayoutManager())
-                    .getPositionForVelocity(newVelocityX, newVelocityY));
-            return true;
+                    .getPositionForVelocity(newVelocityX, newVelocityY, getWidth() / 3));
         }
-        return super.fling(newVelocityX, newVelocityY);
+        return flinging;
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.hardware.SensorManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewConfiguration;
 
@@ -44,11 +45,12 @@ public class SnappyLinearLayoutManager extends LinearLayoutManager implements IS
     }
 
     @Override
-    public int getPositionForVelocity(int velocityX, int velocityY) {
+    public int getPositionForVelocity(int velocityX, int velocityY, int childSize) {
         if (getChildCount() == 0) {
             return 0;
         }
-        if (getOrientation() == HORIZONTAL) {
+
+        if (canScrollHorizontally()) {
             return calcPosForVelocity(velocityX, getChildAt(0).getLeft(), getChildAt(0).getWidth(),
                     getPosition(getChildAt(0)));
         } else {
@@ -59,6 +61,11 @@ public class SnappyLinearLayoutManager extends LinearLayoutManager implements IS
 
     private int calcPosForVelocity(int velocity, int scrollPos, int childSize, int currPos) {
         final double dist = getSplineFlingDistance(velocity);
+
+        Log.d("Distance", String.format("Dist %f Velocity sign: %s", dist, velocity > 0 ? "left" : "right"));
+
+        Log.d("Child Size", String.format("%d", childSize));
+
 
         final double tempScroll = scrollPos + (velocity > 0 ? dist : -dist);
 
