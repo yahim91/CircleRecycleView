@@ -1,5 +1,6 @@
 package me.rotatingrecyclerview;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ import me.rotatingrecyclerview.snappy.SnappyRecyclerView;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private SnappyRecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private Adapter adapter;
     private String[] elems = new String[] {"text1", "text2", "text3", "text4", "text5", "text6", "text7"};
     private LinearLayoutManager linearLayoutManager;
@@ -33,13 +34,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView = (SnappyRecyclerView) findViewById(R.id.recycler_view);
-        adapter = new Adapter(elems);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        adapter = new Adapter(this, elems);
         snappyLinearLayoutManager = new SnappyLinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-//        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-        recyclerView.setLayoutManager(snappyLinearLayoutManager);
+//        recyclerView.setLayoutManager(snappyLinearLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.setChildDrawingOrderCallback(new RecyclerView.ChildDrawingOrderCallback() {
             @Override
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
 //                super.getItemOffsets(outRect, view, parent, state);
                 Adapter.ViewHolder holder = (Adapter.ViewHolder) parent.getChildViewHolder(view);
-//                outRect.set(-holder.offset, 0, -holder.offset, 0);
+                outRect.set(-holder.offset, 0, -holder.offset, 0);
                 Log.d(TAG, "Item offsets " + holder.offset);
             }
         });
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+
         private String[] mDataset;
 
         // Provide a reference to the views for each data item
@@ -78,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
             // each data item is just a string in this case
             public TextView mTextView;
             public int offset = 0;
-            public int oldOffset = 0;
             public ViewHolder(TextView v) {
                 super(v);
                 mTextView = v;
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Provide a suitable constructor (depends on the kind of dataset)
-        public Adapter(String[] myDataset) {
+        public Adapter(Context context, String[] myDataset) {
             mDataset = myDataset;
         }
 
